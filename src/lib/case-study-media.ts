@@ -27,7 +27,6 @@ const CASE_STUDY_VIDEO_ALLOWLIST: Partial<Record<string, readonly string[]>> = {
   "grabbi-food-truck-self-checkout-platform": [
     "grabbi-tap",
     "05-29-21-the-smoke-stop",
-    "05-16-21-john-endorsement-the-smoke-stop",
   ],
 };
 
