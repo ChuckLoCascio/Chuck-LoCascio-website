@@ -12,6 +12,20 @@ function videoLabelFromSrc(src: string): string {
   }
 }
 
+function videoMimeTypeFromSrc(src: string): string | undefined {
+  try {
+    const tail = src.split("/").pop()?.split("?")[0] ?? "";
+    const lower = decodeURIComponent(tail).toLowerCase();
+    if (lower.endsWith(".mp4")) return "video/mp4";
+    if (lower.endsWith(".webm")) return "video/webm";
+    if (lower.endsWith(".mov")) return "video/quicktime";
+    if (lower.endsWith(".ogg")) return "video/ogg";
+  } catch {
+    /* ignore */
+  }
+  return undefined;
+}
+
 export interface CaseStudyVideoSectionProps {
   videos: string[];
   /** Autoplay (muted) when the player scrolls into view; pause when it leaves. */
@@ -124,7 +138,10 @@ export function CaseStudyVideoSection({
           muted={muted}
           preload="metadata"
         >
-          <source src={activeSrc} />
+          <source
+            src={activeSrc}
+            type={videoMimeTypeFromSrc(activeSrc)}
+          />
           Your browser does not support the video tag.
         </video>
         {autoplayInView ? (

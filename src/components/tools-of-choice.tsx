@@ -62,6 +62,18 @@ function IconGitHub(): JSX.Element {
   );
 }
 
+/** Vercel mark — v0 is part of the Vercel product suite. */
+function IconVercelV0(): JSX.Element {
+  return (
+    <svg viewBox="0 0 76 65" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path
+        fill="currentColor"
+        d="M37.5274 0L75.0548 65H0L37.5274 0Z"
+      />
+    </svg>
+  );
+}
+
 export function ToolsOfChoice(): JSX.Element {
   return (
     <section className="border-t border-ch-charcoal bg-ch-near-black/30">
@@ -74,7 +86,7 @@ export function ToolsOfChoice(): JSX.Element {
           The apps I live in day to day—design, build, pair, and ship.
         </p>
 
-        <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+        <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 lg:gap-5">
           <li>
             <ToolCard name="Figma">
               <IconFigma />
@@ -93,6 +105,11 @@ export function ToolsOfChoice(): JSX.Element {
           <li>
             <ToolCard name="GitHub">
               <IconGitHub />
+            </ToolCard>
+          </li>
+          <li>
+            <ToolCard name="Vercel v0">
+              <IconVercelV0 />
             </ToolCard>
           </li>
         </ul>

@@ -222,10 +222,13 @@ export default function CaseStudyPage({ params }: PageProps) {
           <section className="mt-16">
             <h2 className="ch-section-heading">Video</h2>
             <p className="mt-2 font-mono text-sm text-ch-silver">
-              <span className="text-ch-silver">case-study-videos/</span>
+              <span className="text-ch-silver">public/{CASE_STUDY_VIDEOS}/</span>
               {CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
               <span className="mx-2 text-ch-deep-charcoal">·</span>
-              <span className="text-ch-volt">public/{CASE_STUDY_VIDEOS}/{slug}</span>
+              <span className="text-ch-volt">
+                URL /{CASE_STUDY_VIDEOS}/
+                {encodeURIComponent(CASE_STUDY_ASSET_FOLDER[slug] ?? slug)}
+              </span>
             </p>
             <CaseStudyVideoSection
               videos={videos}
@@ -253,17 +256,13 @@ export default function CaseStudyPage({ params }: PageProps) {
             <p className="text-sm font-normal text-ch-silver">
               Add files under{" "}
               <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
-                case-study-images/{CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
+                public/case-study-images/{CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
               </code>{" "}
               and{" "}
               <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
-                case-study-videos/{CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
+                public/case-study-videos/{CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
               </code>
-              . Symlink{" "}
-              <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
-                public/…/{slug}
-              </code>{" "}
-              — see{" "}
+              . Public URLs use these folder names (encoded in the path) — see{" "}
               <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
                 src/lib/case-study-media.ts
               </code>
