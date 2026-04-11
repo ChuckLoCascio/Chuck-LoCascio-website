@@ -4,29 +4,7 @@ import "@/styles/globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { person } from "@/lib/portfolio-content";
-import { Analytics } from '@vercel/analytics/next';
-
-
-/**Tracking Vercel Analytics */
-import { Analytics } from '@vercel/analytics/next';
- 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <head>
-        <title>Next.js</title>
-      </head>
-      <body>
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  );
-}
+import { Analytics } from "@vercel/analytics/react";
 
 /** CoinbaseSans / CoinbaseText stand-in — docs/design-md/coinbase/DESIGN.md + preview-dark.html */
 const fontSans = Inter({
@@ -62,6 +40,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
