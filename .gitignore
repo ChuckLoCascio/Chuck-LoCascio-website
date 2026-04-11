@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.env
+.DS_Store
+*.log
+case-study-videos/
+*.MOV
+*.mov
+*.mp4
+*.MP4

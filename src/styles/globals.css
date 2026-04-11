@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Coinbase dark — docs/design-md/coinbase/DESIGN.md + preview-dark.html */
+@layer base {
+  :root {
+    --background: 216 24% 4%;
+    --foreground: 210 12% 93%;
+
+    --card: 220 10% 12%;
+    --card-foreground: 210 12% 93%;
+
+    --popover: 216 24% 6%;
+    --popover-foreground: 210 12% 93%;
+
+    /* Coinbase Blue */
+    --primary: 221 100% 50%;
+    --primary-foreground: 216 24% 4%;
+
+    --secondary: 220 10% 12%;
+    --secondary-foreground: 210 12% 93%;
+
+    --muted: 220 8% 16%;
+    --muted-foreground: 220 6% 55%;
+
+    --accent: 221 100% 50%;
+    --accent-foreground: 216 24% 4%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 8% 18%;
+    --input: 220 10% 12%;
+    --ring: 221 100% 50%;
+
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-ch-page text-ch-white antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ch-volt focus-visible:ring-offset-2 focus-visible:ring-offset-ch-page;
+  }
+
+  /** Section headings — CoinbaseSans (Inter) */
+  .ch-section-heading {
+    @apply font-sans text-3xl font-normal leading-[1.11] tracking-tight text-ch-white md:text-4xl;
+  }
+
+  .text-body-reading {
+    @apply text-[1.125rem] font-normal leading-[1.56] text-ch-silver;
+  }
+
+  /** Uppercase section labels — preview: 12px bold, wide tracking */
+  .ch-label {
+    @apply font-sans text-xs font-bold uppercase leading-normal tracking-[0.05em] text-ch-silver;
+  }
+}

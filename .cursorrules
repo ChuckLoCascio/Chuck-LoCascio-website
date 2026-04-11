@@ -1,0 +1,66 @@
+# Cursor Rules — Project Guidelines
+
+## Tech Stack
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS
+- **Package Manager**: npm
+
+## Code Style
+- Use functional components with TypeScript interfaces for props
+- Prefer named exports over default exports for components
+- File naming: `kebab-case` for files, `PascalCase` for components
+- Use `@/` path alias for imports from `src/`
+- Co-locate component styles with the component (Tailwind utility classes)
+
+## Component Conventions
+- All shared UI lives in `src/components/ui/`
+- Page-specific components live in `src/components/` or the page folder
+- Use `cn()` helper from `@/lib/utils` for conditional class merging
+- Keep components small and focused — split when > ~150 lines
+
+## Tailwind Guidelines
+- Prefer Tailwind utilities over custom CSS
+- Use `@apply` sparingly — only in `globals.css` for truly global patterns
+- Extend the theme in `tailwind.config.ts` rather than using arbitrary values
+- Use semantic color names via CSS variables: `bg-background`, `text-foreground`, etc.
+
+## TypeScript
+- Prefer `interface` for object shapes; `type` for unions/primitives
+- Avoid `any` — use `unknown` + type narrowing instead
+- Always type function parameters and return types explicitly
+
+## File Structure
+```
+src/
+  app/          # Next.js App Router pages & layouts
+  components/
+    ui/         # Base design-system components
+  hooks/        # Custom React hooks
+  lib/          # Utilities and shared logic
+  styles/       # Global CSS
+```
+
+## Naming
+- Components: `PascalCase.tsx`
+- Hooks: `use-kebab-case.ts`
+- Utilities: `kebab-case.ts`
+- Types/interfaces: `PascalCase`, suffix with `Props` for component props
+
+## Design Knowledge
+- Read `docs/DESIGN-CASE-STUDY-KNOWLEDGE.md` for design principles, case study context, and component prompting patterns derived from real product engagements (EQ Sight, BlackRock, Grabbi, SVB).
+- When generating UI components, reference the relevant case study's "Cursor Prompting Tips" section for opinionated, context-aware guidance.
+- Cross-project principles (speed, design systems, accessibility, measurable outcomes) apply to every component in this project.
+
+## Design System Reference Knowledge
+- **Portfolio UI** follows **ClickHouse** (`docs/design-md/clickhouse/DESIGN.md`): pure black canvas (`#000000`), **Neon Volt** (`#faff69`) accents & primary CTAs, **Forest Green** (`#166534`) secondary actions, charcoal borders `rgba(65,65,65,0.8)`, Inter weight 900 display / 600 UI, **4px–8px radius** (sharp geometry), Inconsolata for code, dark-only surfaces.
+- For other branded prompts, use `docs/design-md/<company>/DESIGN.md` and `README.md`.
+
+## Case study digital artifacts
+- **Source folders (repo root)**: `case-study-images/<Folder>/` and `case-study-videos/<Folder>/` with human-readable folder names (`Energy Quotient`, `BlackRock`, `Grabbi`, `SVB`). Slugs in code map via `CASE_STUDY_ASSET_FOLDER` in `src/lib/case-study-media.ts`.
+- **Served URLs**: `public/case-study-images/<slug>/` and `public/case-study-videos/<slug>/` are **symlinks** into those project folders so Next.js can serve them at `/case-study-images/...` and `/case-study-videos/...`. After clone or if links break, run `bash scripts/link-case-study-assets.sh` (or `npm run link-case-study-assets` if defined).
+- **Code**: `getCaseStudyImages` / `getCaseStudyVideos` list files and emit URL-encoded paths for filenames with spaces.
+
+## Git
+- Commit messages: imperative mood (`Add`, `Fix`, `Update`)
+- Branch names: `feature/`, `fix/`, `chore/`
