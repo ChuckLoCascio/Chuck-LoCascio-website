@@ -147,7 +147,7 @@ export const person = {
   site: "https://www.chucklocascio.com",
   linkedin: "https://www.linkedin.com/in/locasciochuck",
   linkedinHandle: "@locasciochuck",
-  imageSrc: "/chuck-locascio.png",
+  imageSrc: "/Chuck%20LoCascio%20Profile%20Photo.png",
   /** Homepage hero: right-aligned collage (`public/homepage-hero-image/chuck-collage-2026.png`). */
   heroCollageSrc: "/homepage-hero-image/chuck-collage-2026.png",
   /** Intrinsic pixel size of hero collage (for Next/Image layout, no crop). */

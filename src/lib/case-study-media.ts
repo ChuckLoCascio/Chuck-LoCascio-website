@@ -2,19 +2,34 @@ import fs from "fs";
 import path from "path";
 
 /**
- * Listing tries `public/case-study-images|videos/<client folder>/` first, then the same segment with `<slug>/`.
- * Public URLs use whichever directory exists (encoded folder name or slug) so asset paths match.
+ * Static URLs are `/case-study-images/<folder>/file` and `/case-study-videos/<folder>/file`
+ * where `<folder>` is exactly the directory name under `public/` (URL-encoded when needed).
  */
 export const CASE_STUDY_IMAGES = "case-study-images" as const;
 export const CASE_STUDY_VIDEOS = "case-study-videos" as const;
 
-/** Slug → client folder name under `public/case-study-images/` / `public/case-study-videos/` */
-export const CASE_STUDY_ASSET_FOLDER: Record<string, string> = {
+/** Route slug → folder under `public/case-study-images/<folder>/` (must match disk). */
+export const CASE_STUDY_IMAGE_FOLDER: Record<string, string> = {
   "eq-sight": "Energy Quotient",
   "blackrock-advisor-center": "BlackRock",
   "grabbi-food-truck-self-checkout-platform": "Grabbi",
   "svb-online-banking": "SVB",
 };
+
+/** Route slug → folder under `public/case-study-videos/<folder>/` (must match disk). */
+export const CASE_STUDY_VIDEO_FOLDER: Record<string, string> = {
+  "eq-sight": "Energy Quotient",
+  "blackrock-advisor-center": "BlackRock",
+  "grabbi-food-truck-self-checkout-platform":
+    "grabbi-food-truck-self-checkout-platform",
+  "svb-online-banking": "SVB",
+};
+
+/**
+ * @deprecated Use `CASE_STUDY_IMAGE_FOLDER`. Kept for imports that expect a single “asset folder” name for images.
+ */
+export const CASE_STUDY_ASSET_FOLDER: Record<string, string> =
+  CASE_STUDY_IMAGE_FOLDER;
 
 const IMAGE_EXT = /\.(png|jpe?g|gif|webp|avif)$/i;
 const VIDEO_EXT = /\.(mp4|webm|mov|ogg)$/i;
@@ -23,7 +38,6 @@ const VIDEO_EXT = /\.(mp4|webm|mov|ogg)$/i;
 const CASE_STUDY_VIDEO_ALLOWLIST: Partial<Record<string, readonly string[]>> = {
   "eq-sight": ["eq-demo-night-video", "eq sight 3"],
   "blackrock-advisor-center": ["advisor center poll 2"],
-  /** Clips under `grabbi-food-truck-self-checkout-platform/` (or `Grabbi/`). */
   "grabbi-food-truck-self-checkout-platform": [
     "grabbi-tap",
     "05-29-21-the-smoke-stop",
@@ -58,10 +72,10 @@ function filterAndOrderVideosByAllowlist(
 
 function toPublicUrl(
   segment: typeof CASE_STUDY_IMAGES | typeof CASE_STUDY_VIDEOS,
-  clientFolder: string,
+  folderSegment: string,
   filename: string
 ): string {
-  const safeFolder = clientFolder
+  const safeFolder = folderSegment
     .split("/")
     .map((p) => encodeURIComponent(p))
     .join("/");
@@ -72,69 +86,32 @@ function toPublicUrl(
   return `/${segment}/${safeFolder}/${safeFile}`;
 }
 
-/**
- * Prefer client folder, then slug folder — use the first directory that contains at least one
- * file matching `extTest` (so an empty `Grabbi/` does not block `grabbi-food-truck-self-checkout-platform/`).
- */
-function resolveCaseStudyMediaDir(
-  segment: string,
-  slug: string,
-  folder: string,
-  extTest: RegExp
-): { dir: string; urlFolderSegment: string } | null {
-  const base = path.join(process.cwd(), "public", segment);
-  const candidates: { dir: string; urlFolderSegment: string }[] = [
-    { dir: path.join(base, folder), urlFolderSegment: folder },
-    { dir: path.join(base, slug), urlFolderSegment: slug },
-  ];
-  for (const { dir, urlFolderSegment } of candidates) {
-    try {
-      if (!fs.statSync(dir).isDirectory()) {
-        continue;
-      }
-      const names = fs.readdirSync(dir, { withFileTypes: true });
-      const hasMatch = names.some(
-        (d) => d.isFile() && extTest.test(d.name)
-      );
-      if (hasMatch) {
-        return { dir, urlFolderSegment };
-      }
-    } catch {
-      continue;
-    }
-  }
-  return null;
-}
-
 function listMedia(
   segment: typeof CASE_STUDY_IMAGES | typeof CASE_STUDY_VIDEOS,
   slug: string,
-  extTest: RegExp
+  extTest: RegExp,
+  folderMap: Record<string, string>
 ): string[] {
-  const folder = CASE_STUDY_ASSET_FOLDER[slug];
+  const folder = folderMap[slug];
   if (!folder) {
     return [];
   }
-  const resolved = resolveCaseStudyMediaDir(segment, slug, folder, extTest);
-  if (!resolved) {
-    return [];
-  }
-  const { dir, urlFolderSegment } = resolved;
+  const dir = path.join(process.cwd(), "public", segment, folder);
   try {
     const names = fs.readdirSync(dir, { withFileTypes: true });
     return names
       .filter((d) => d.isFile() && extTest.test(d.name))
       .map((d) => d.name)
       .sort()
-      .map((f) => toPublicUrl(segment, urlFolderSegment, f));
+      .map((f) => toPublicUrl(segment, folder, f));
   } catch {
     return [];
   }
 }
 
-/** Image paths under `public/case-study-images/<folder>/`; URLs include encoded folder segment. */
+/** Image paths under `public/case-study-images/<folder>/`; URLs use that folder segment (encoded). */
 export function getCaseStudyImages(slug: string): string[] {
-  const urls = listMedia(CASE_STUDY_IMAGES, slug, IMAGE_EXT);
+  const urls = listMedia(CASE_STUDY_IMAGES, slug, IMAGE_EXT, CASE_STUDY_IMAGE_FOLDER);
   return orderPreferredFirstImage(slug, urls);
 }
 
@@ -144,9 +121,14 @@ export function getCaseStudyThumbnail(slug: string): string | undefined {
   return imgs[0];
 }
 
-/** Video paths under `public/case-study-videos/<folder>/`; URLs include encoded folder segment. */
+/** Video paths under `public/case-study-videos/<folder>/`; URLs use that folder segment (encoded). */
 export function getCaseStudyVideos(slug: string): string[] {
-  const urls = listMedia(CASE_STUDY_VIDEOS, slug, VIDEO_EXT);
+  const urls = listMedia(
+    CASE_STUDY_VIDEOS,
+    slug,
+    VIDEO_EXT,
+    CASE_STUDY_VIDEO_FOLDER
+  );
   return filterAndOrderVideosByAllowlist(slug, urls);
 }
 

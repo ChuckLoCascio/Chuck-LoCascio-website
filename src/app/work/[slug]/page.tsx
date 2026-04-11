@@ -5,8 +5,8 @@ import { CaseStudyImageGallery } from "@/components/case-study-image-gallery";
 import { CaseStudyVideoSection } from "@/components/case-study-video-section";
 import { buttonClassName } from "@/components/ui/button";
 import {
-  CASE_STUDY_ASSET_FOLDER,
-  CASE_STUDY_IMAGES,
+  CASE_STUDY_IMAGE_FOLDER,
+  CASE_STUDY_VIDEO_FOLDER,
   CASE_STUDY_VIDEOS,
   getCaseStudyImages,
   getCaseStudyVideos,
@@ -223,11 +223,11 @@ export default function CaseStudyPage({ params }: PageProps) {
             <h2 className="ch-section-heading">Video</h2>
             <p className="mt-2 font-mono text-sm text-ch-silver">
               <span className="text-ch-silver">public/{CASE_STUDY_VIDEOS}/</span>
-              {CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
+              {CASE_STUDY_VIDEO_FOLDER[slug] ?? slug}
               <span className="mx-2 text-ch-deep-charcoal">·</span>
               <span className="text-ch-volt">
                 URL /{CASE_STUDY_VIDEOS}/
-                {encodeURIComponent(CASE_STUDY_ASSET_FOLDER[slug] ?? slug)}
+                {encodeURIComponent(CASE_STUDY_VIDEO_FOLDER[slug] ?? slug)}
               </span>
             </p>
             <CaseStudyVideoSection
@@ -256,11 +256,11 @@ export default function CaseStudyPage({ params }: PageProps) {
             <p className="text-sm font-normal text-ch-silver">
               Add files under{" "}
               <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
-                public/case-study-images/{CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
+                public/case-study-images/{CASE_STUDY_IMAGE_FOLDER[slug] ?? slug}
               </code>{" "}
               and{" "}
               <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
-                public/case-study-videos/{CASE_STUDY_ASSET_FOLDER[slug] ?? slug}
+                public/case-study-videos/{CASE_STUDY_VIDEO_FOLDER[slug] ?? slug}
               </code>
               . Public URLs use these folder names (encoded in the path) — see{" "}
               <code className="rounded-ch bg-ch-page px-1.5 py-0.5 font-mono text-xs text-ch-volt">
