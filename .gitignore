@@ -12,3 +12,4 @@ case-study-videos/
 *.mov
 *.mp4
 *.MP4
+.vercel
