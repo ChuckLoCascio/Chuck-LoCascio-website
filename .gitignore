@@ -7,9 +7,8 @@ coverage/
 .env
 .DS_Store
 *.log
-case-study-videos/
-*.MOV
-*.mov
-*.mp4
-*.MP4
 .vercel
+
+# Legacy duplicate asset trees at repo root only (canonical copies live under public/).
+/case-study-videos/
+/case-study-images/
