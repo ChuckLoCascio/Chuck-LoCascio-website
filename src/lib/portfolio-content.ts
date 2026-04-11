@@ -44,14 +44,14 @@ export interface CaseStudyDetail extends CaseStudySummary {
   showQuoteHeading?: boolean;
 }
 
-/** Homepage: AI patent block (diagram in `public/patent-explanation-driven-reasoning.png`). */
+/** Homepage: AI patent block (diagram in `public/patent-image.png`). */
 export const aiPatent = {
   title: "Explanation-driven reasoning engine",
   description:
     'Active AI patent holder granted on 07/04/2023: "Explanation-Driven Reasoning Engine".',
   /** Google Patents public page */
   url: "https://patents.google.com/patent/US20200349455A1/en?q=(charles+locascio)&oq=charles+locascio",
-  thumbnailSrc: "/patent-explanation-driven-reasoning.png",
+  thumbnailSrc: "/patent-image.png",
 } as const;
 
 /** LinkedIn recommendations — source: linkedin.com/in/locasciochuck */
