@@ -10,6 +10,7 @@
     "link-case-study-assets": "bash scripts/link-case-study-assets.sh"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "next": "14.2.5",
     "react": "^18",
