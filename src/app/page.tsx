@@ -172,25 +172,18 @@ export default function HomePage() {
             Available for product design leadership, AI-native product design,
             design systems, and founder-led teams in San Francisco, CA.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <div className="mt-10 flex justify-center">
             <a
-              href={`mailto:${person.email}`}
+              href="https://calendly.com/locascio-chuck/intro-call-let-s-talk-design"
+              target="_blank"
+              rel="noopener noreferrer"
               className={buttonClassName({
                 variant: "primary",
                 size: "lg",
               })}
             >
-              Start a conversation
+              Book Time with Chuck
             </a>
-            <Link
-              href="/about"
-              className={buttonClassName({
-                variant: "outline",
-                size: "lg",
-              })}
-            >
-              About &amp; experience
-            </Link>
           </div>
         </div>
       </section>
