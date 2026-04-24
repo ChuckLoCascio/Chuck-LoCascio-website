@@ -153,7 +153,7 @@ export const person = {
   /** Intrinsic pixel size of hero collage (for Next/Image layout, no crop). */
   heroCollageWidth: 2470,
   heroCollageHeight: 2646,
-  resumePdf: "/Chuck-LoCascio-Resume-2025.pdf",
+  resumePdf: "/chuck-locascio-resume-2026.pdf",
 } as const;
 
 export const experience: ExperienceItem[] = [
